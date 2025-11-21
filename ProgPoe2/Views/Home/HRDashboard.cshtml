@@ -1,0 +1,42 @@
+﻿@model List<User>
+
+<h2>HR Dashboard - User Management</h2>
+
+<div class="mb-3">
+    <a href="@Url.Action("AddUser")" class="btn btn-success">Add New User</a>
+    <a href="@Url.Action("GenerateHRReport")" class="btn btn-info">Generate HR Report</a>
+</div>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Hourly Rate</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserID</td>
+                <td>@user.Name @user.Surname</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td>R @user.HourlyRate.ToString("F2")</td>
+                <td>
+                    <span class="badge @(user.IsActive ? "bg-success" : "bg-danger")">
+                        @(user.IsActive ? "Active" : "Inactive")
+                    </span>
+                </td>
+                <td>
+                    <a href="@Url.Action("EditUser", new { id = user.UserID })" class="btn btn-warning btn-sm">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

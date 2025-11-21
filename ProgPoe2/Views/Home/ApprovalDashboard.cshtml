@@ -1,0 +1,56 @@
+﻿@model List<Claim>
+
+<h2>Approval Dashboard</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Lecturer</th>
+                <th>Submission Date</th>
+                <th>Hours Worked</th>
+                <th>Total Amount</th>
+                <th>Document</th>
+                <th>Notes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        //Troelsen and Japikse (2021)
+        <tbody>
+            @foreach (var claim in Model)
+            {
+                <tr>
+                    <td>@claim.Id</td>
+                    <td>@claim.LecturerName</td>
+                    <td>@claim.SubmissionDate.ToShortDateString()</td>
+                    <td>@claim.HoursWorked</td>
+                    <td>R @((claim.HoursWorked * claim.HourlyRate).ToString("F2"))</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(claim.SupportingDocumentName))
+                        {
+                            <a href="#" onclick="alert('Document: @claim.SupportingDocumentName');">@claim.SupportingDocumentName</a>
+                        }
+                    </td>
+                    <td>@claim.Notes</td>
+                    <td>
+                        <form asp-action="UpdateClaimStatus" method="post" style="display: inline;">
+                            <input type="hidden" name="claimId" value="@claim.Id" />
+                            <button type="submit" name="status" value="Approved" style="background-color: gray; color: white;" class="btn btn-sm">Approve</button>
+                            <button type="submit" name="status" value="Rejected" style="background-color: gray; color: white;" class="btn btn-sm">Reject</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    //Troelsen and Japikse (2021)
+}
+else
+{
+    <p>There are no pending claims.</p>
+}
+/*Reference List
+Troelsen, A. and Japikse, P. 2021. Pro C# 9 with .NET 5: Foundational Principles and Practices in Programming. 10th ed. Apress
+*/

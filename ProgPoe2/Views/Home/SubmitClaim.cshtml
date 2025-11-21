@@ -1,0 +1,105 @@
+﻿@model Claim
+
+<h2>Submit New Claim</h2>
+
+<form asp-action="SubmitClaim" method="post" enctype="multipart/form-data" class="modern-form">
+    <h2 class="form-title">Submit Claim</h2>
+
+    <div class="form-group">
+        <label class="form-label">Lecturer Name</label>
+        <input type="text" class="form-control" value="@Model.LecturerName" readonly />
+        <small class="form-text text-muted">This is automatically filled from your profile</small>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Hourly Rate</label>
+        <input type="text" class="form-control" value="R @Model.HourlyRate.ToString("F2")" readonly />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HoursWorked" class="form-label">Hours Worked</label>
+        <input asp-for="HoursWorked" type="number" step="0.5" class="form-control"
+               id="hoursWorked" required onchange="calculateTotal()" />
+        <span asp-validation-for="HoursWorked" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Total Amount</label>
+        <input type="text" class="form-control" id="totalAmount" readonly />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Notes" class="form-label">Additional Notes</label>
+        <textarea asp-for="Notes" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="file" class="form-label">Supporting Document</label>
+        <input type="file" id="file" name="file" class="form-control-file" accept=".pdf,.doc,.docx,.xls,.xlsx" />
+    </div>
+
+    <button type="submit" class="btn btn-submit">Submit Claim</button>
+</form>
+
+@section Scripts {
+    <script>
+        function calculateTotal() {
+            const hours = parseFloat(document.getElementById('hoursWorked').value) || 0;
+            const hourlyRate = @Model.HourlyRate;
+            const total = hours * hourlyRate;
+            document.getElementById('totalAmount').value = 'R ' + total.toFixed(2);
+        }
+
+        // Calculate on page load
+        document.addEventListener('DOMContentLoaded', calculateTotal);
+    </script>
+}
+}
+<style>
+    .modern-form {
+        background-color: #f9f9f9; /* Light background for the form */
+        border-radius: 8px; /* Rounded corners */
+        padding: 20px; /* Padding around the form */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        max-width: 600px; /* Limit width */
+        margin: auto; /* Center form */
+    }
+
+    .form-title {
+        text-align: center; /* Center the title */
+        color: #333; /* Dark gray for the title */
+        margin-bottom: 20px; /* Spacing below the title */
+    }
+
+    .form-label {
+        font-weight: bold; /* Bold labels */
+        margin-bottom: 5px; /* Space below labels */
+    }
+
+    .form-control {
+        background-color: #fff; /* White background for inputs */
+        border: 1px solid #ced4da; /* Border color */
+        border-radius: 4px; /* Rounded corners */
+        transition: border-color 0.3s; /* Smooth border color transition */
+    }
+
+        .form-control:focus {
+            border-color: #007bff; /* Blue border on focus */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Blue shadow on focus */
+        }
+
+    .btn-submit {
+        background-color: #007bff; /* Primary blue color */
+        border-color: #007bff; /* Match border to background */
+        color: #fff; /* White text */
+        padding: 10px 20px; /* Button padding */
+        border-radius: 5px; /* Rounded button */
+        transition: background-color 0.3s, border-color 0.3s; /* Smooth color transitions */
+        width: 100%; /* Full width button */
+    }
+
+        .btn-submit:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            border-color: #0056b3; /* Match border to hover color */
+        }
+</style>
