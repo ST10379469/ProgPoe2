@@ -141,7 +141,9 @@ namespace ProgPoe2.Controllers
             {
                 return RedirectToAction("Index");
             }
-            return View(UserRepository.Users.Where(u => u.Role != "HR"));
+            
+            var users = UserRepository.Users.Where(u => u.Role != "HR").ToList();
+            return View(users);
         }
 
         [HttpGet]
