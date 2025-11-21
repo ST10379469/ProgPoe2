@@ -1,20 +1,13 @@
-<<<<<<< HEAD
 using Microsoft.AspNetCore.Mvc;
 using Azure.Storage.Files.Shares;
 using ProgPoe2.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
-=======
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using ProgPoe2.Models;
->>>>>>> ab259e5b3cf525d4f6aff2a46ee9ae8bf67240c1
 
 namespace ProgPoe2.Controllers
 {
     public class HomeController : Controller
     {
-<<<<<<< HEAD
         private readonly string connectionString = "DefaultEndpointsProtocol=https;AccountName=cldvst10043611;AccountKey=A1DGT56hmblnV8FX6ISHlF9HU9v/o8z6thDkC+Sr/NCqJxdyk1A8xZykTdH16+LGacXmi+4vBKHa+ASt2pl1HA==;EndpointSuffix=core.windows.net";
         private readonly string shareName = "uploadedfiles";
 
@@ -29,18 +22,10 @@ namespace ProgPoe2.Controllers
         {
             var user = GetCurrentUser();
             return user != null && user.Role == requiredRole;
-=======
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
->>>>>>> ab259e5b3cf525d4f6aff2a46ee9ae8bf67240c1
         }
 
         public IActionResult Index()
         {
-<<<<<<< HEAD
             var user = GetCurrentUser();
             if (user != null)
             {
@@ -156,9 +141,7 @@ namespace ProgPoe2.Controllers
             {
                 return RedirectToAction("Index");
             }
-            
-            var users = UserRepository.Users.Where(u => u.Role != "HR").ToList();
-            return View(users);
+            return View(UserRepository.Users.Where(u => u.Role != "HR"));
         }
 
         [HttpGet]
@@ -370,24 +353,10 @@ namespace ProgPoe2.Controllers
             return View(report);
         }
 
-=======
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
->>>>>>> ab259e5b3cf525d4f6aff2a46ee9ae8bf67240c1
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> ab259e5b3cf525d4f6aff2a46ee9ae8bf67240c1
